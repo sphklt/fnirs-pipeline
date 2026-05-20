@@ -97,8 +97,12 @@ often outperform complex models on small-N neuroimaging datasets
   between HbO and HbR during neural activation (Cui et al., 2010)
 - Hemispheric asymmetry: left/right channel differences
 
+**Artifact removal** (`utils/artifact_removal.py`):
+- **CBSI (Correlation-Based Signal Improvement):** removes systemic noise by enforcing HbO/HbR anti-correlation (Cui et al., 2010)
+- **ICA + Wavelet decomposition:** creates virtual channels from a single sensor, identifies and removes artifact components by kurtosis
+- **Combined pipeline:** ICA first (broadband artifacts), then CBSI (systemic hemodynamics)
+
 **Next steps for real data:**
-- Motion artifact correction: CBSI, PCA, or wavelet-based methods
 - Channel selection / spatial filtering
 - Subject-independent (cross-subject) validation
 - Deep learning: CNN or Transformer on raw signals
@@ -115,4 +119,4 @@ often outperform complex models on small-N neuroimaging datasets
 
 ---
 
-*Nancy Tyagi — nancy@postcare.ai*
+*Nancy Tyagi*
