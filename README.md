@@ -11,14 +11,15 @@ in cerebral blood flow wearables and neuroimaging research.
 
 The pipeline mirrors what a real neuroimaging ML system does:
 
-```
-Raw fNIRS signal
-    → Bandpass filter (0.01–0.5 Hz)
-    → Baseline correction
-    → Artifact rejection (amplitude z-score)
-    → Feature extraction (statistical + spectral + HbO/HbR coupling)
-    → Classification (LDA / RF / SVM / Gradient Boosting)
-    → Decoded mental state
+```mermaid
+flowchart TD
+    A[🧠 Raw fNIRS Signal\nHbO + HbR per channel] --> B[Bandpass Filter\n0.01–0.5 Hz]
+    B --> C[Baseline Correction\nzero-mean per epoch]
+    C --> D[Artifact Rejection\namplitude z-score]
+    D --> E[ICA + CBSI\nSoftware artifact removal]
+    E --> F[Feature Extraction\nStatistical · Spectral · Coupling · Spatial]
+    F --> G[Classification\nLDA · RF · SVM · GradBoost]
+    G --> H[Predicted Mental State\nREST / MENTAL / MOTOR]
 ```
 
 ---
