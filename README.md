@@ -42,13 +42,20 @@ It's non-invasive, wearable, and directly measures cerebral blood flow.
 ```
 fnirs_pipeline/
 ├── data/
-│   └── generate.py        # Synthetic fNIRS data with realistic physiology
+│   └── generate.py              # Synthetic fNIRS data with realistic physiology
 ├── utils/
-│   ├── preprocess.py      # Bandpass filter, baseline correction, artifact rejection
-│   └── features.py        # Statistical, spectral, coupling, spatial features
+│   ├── preprocess.py            # Bandpass filter, baseline correction, artifact rejection
+│   ├── features.py              # Statistical, spectral, coupling, spatial features
+│   └── artifact_removal.py      # ICA + CBSI software artifact removal
 ├── models/
-│   └── classify.py        # LDA, RF, SVM, GradBoost — cross-validated
-└── app.py                 # Streamlit interactive demo
+│   └── classify.py              # LDA, RF, SVM, GradBoost — cross-validated
+├── notebooks/
+│   └── 01_artifact_removal_deep_dive.ipynb
+├── app.py                       # Streamlit interactive demo
+├── requirements.txt
+├── README.md
+├── LEARNING_GUIDE.md            # Beginner-friendly step-by-step walkthrough
+└── APP_WALKTHROUGH.md           # Visual guide to the Streamlit app
 ```
 
 ---
@@ -56,13 +63,12 @@ fnirs_pipeline/
 ## Quickstart
 
 ```bash
-pip install mne numpy scipy scikit-learn matplotlib streamlit
+pip install -r requirements.txt
 
 # Run the interactive demo
 streamlit run app.py
 
 # Or run the pipeline from the command line
-cd fnirs_pipeline
 python models/classify.py
 ```
 
