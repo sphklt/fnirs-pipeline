@@ -142,7 +142,7 @@ and predict `y`.
 ### Why synthetic data?
 
 Real fNIRS recordings require a lab, a headset, and participants doing tasks.
-This pipeline was built quickly for an interview demo, so it simulates realistic
+This pipeline uses simulated data instead of real recordings, so it simulates realistic
 data instead — using the known physics of how fNIRS signals behave.
 
 Think of it like generating realistic fake weather data to build and test a
@@ -545,9 +545,8 @@ Examples:
 - Scalp blood flow changes → fNIRS sensors sit on the scalp, not the brain
 
 These mimic real brain signals. They are in the right frequency range, right amplitude,
-and pass artifact rejection. This is the hard problem — and Temple's specific engineering
-challenge, since their single sensor sits on the scalp with no reference channel to
-subtract against.
+and pass artifact rejection. This is the hard problem for any single-sensor wearable,
+since the sensor sits directly on the scalp with no reference channel to subtract against.
 
 Two methods address this: **CBSI** and **ICA**.
 
@@ -733,4 +732,4 @@ Raw fNIRS signal
 
 ---
 
-*Nancy Tyagi — built as a Temple interview demo, May 2026*
+*Nancy Tyagi — May 2026*

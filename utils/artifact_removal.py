@@ -4,8 +4,8 @@ fNIRS Artifact Removal: ICA and Anti-Correlation Method
 Implements two software-based approaches to removing scalp/systemic noise
 from fNIRS signals when no physical short-separation channel is available.
 
-This is the exact engineering challenge Temple faces: a single wearable sensor
-on the temple with no reference channel to subtract scalp hemodynamics.
+This is the key engineering challenge for single-sensor wearables: one sensor
+on the scalp with no reference channel to subtract scalp hemodynamics.
 
 METHODS IMPLEMENTED
 -------------------
@@ -31,7 +31,7 @@ REFERENCES
 """
 
 import numpy as np
-from scipy.signal import butter, sosfiltfilt
+from scipy.signal import butter, sosfiltfilt  # noqa: F401
 from scipy.stats import kurtosis
 from sklearn.decomposition import FastICA
 import pywt
@@ -54,13 +54,13 @@ class ICAConfig:
     random_state: int = 42
 
 
-def _wavelet_decompose(signal_1d: np.ndarray, n_components: int, fs: float) -> np.ndarray:
+def _wavelet_decompose(signal_1d: np.ndarray, n_components: int, fs: float = 10.0) -> np.ndarray:
     """
     Decompose a single channel into multiple pseudo-channels using
     Discrete Wavelet Transform (DWT) detail and approximation coefficients.
 
-    WHY: ICA needs multiple input channels to separate sources. Since Temple
-    has one sensor, we use wavelets to create "virtual channels" — each one
+    WHY: ICA needs multiple input channels to separate sources. Since a single-sensor
+    wearable has one channel, we use wavelets to create "virtual channels" — each one
     capturing the signal's behavior at a different frequency band.
 
     DWT levels map to frequency bands (at fs=10 Hz, db4 wavelet):
@@ -156,8 +156,6 @@ def apply_ica_single_channel(
     """
     if cfg is None:
         cfg = ICAConfig()
-
-    n_samples = len(signal_1d)
 
     # Step 1: Create pseudo-multichannel representation via wavelets
     pseudo_channels = _wavelet_decompose(signal_1d, cfg.n_components, cfg.fs)
@@ -310,7 +308,7 @@ def apply_cbsi(
     if cfg is None:
         cfg = CBSIConfig()
 
-    n_channels, n_samples = hbo.shape
+    n_channels = hbo.shape[0]
     hbo_clean = np.zeros_like(hbo)
     hbr_clean = np.zeros_like(hbr)
     alphas = np.zeros(n_channels)
